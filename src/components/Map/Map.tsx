@@ -20,10 +20,10 @@ function LocationMarker() {
   useEffect(() => {
     map.locate().on("locationfound", function (e) {
       setUserLocation(e.latlng);
+      localStorage.setItem("lat",  JSON.stringify([e.latlng.lat ,e.latlng.lng]));
       map.flyTo(e.latlng, map.getZoom());
     });
   }, [map]);
-
   return userLocation === null ? null : (
     <Marker position={userLocation} icon={customIcon}>
       <Popup>You are here!</Popup>
@@ -35,11 +35,11 @@ export default function Map() {
   return (
     <MapContainer
       className="min-w-full min-h-screen -z-10"
-      center={[0, 0]}
-      zoom={18}
+      center={[15, 15]}
+      zoom={15}
       scrollWheelZoom={false}
       style={{ position: "relative" }}
-      zoomControl={false} // Disable the default zoom control
+      zoomControl={true} // Disable the default zoom control
     >
       <TileLayer
         maxZoom={18}

@@ -16,10 +16,10 @@ export default function Home() {
     setIsLeftPaneOpen(!isLeftPaneOpen);
   };
   
-  const fetchData = async (service) => {
+  const fetchData = async (service : string) => {
     
     try {
-      const latlin =JSON.parse(localStorage.getItem('lat'));
+      const latlin =JSON.parse(localStorage.getItem('lat') ?? "[0,0]");
       const response = await axios.get(`http://localhost:5000/?loc=${latlin[0]},${latlin[1]}&time=10&transport=car&service=${service}`);
         const data = response.data;
         setApiData(data);

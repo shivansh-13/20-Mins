@@ -1,12 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
+import { MapContainer, TileLayer, Marker, Popup, useMap, ZoomControl } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 
+import iconMarker from "leaflet/dist/images/marker-icon.png"
+import iconMarkerTx from "leaflet/dist/images/marker-icon-2x.png"
+import iconMarkerShadow from "leaflet/dist/images/marker-shadow.png"
+
 const customIcon = new L.Icon({
-  iconUrl: require("leaflet/dist/images/marker-icon.png"),
-  iconRetinaUrl: require("leaflet/dist/images/marker-icon-2x.png"),
-  shadowUrl: require("leaflet/dist/images/marker-shadow.png"),
+  iconUrl: iconMarker.src,
+  iconRetinaUrl: iconMarkerTx.src,
+  shadowUrl: iconMarkerShadow.src,
   iconSize: [25, 41],
   iconAnchor: [12, 41],
   popupAnchor: [1, -34],
@@ -15,7 +19,7 @@ const customIcon = new L.Icon({
 
 function LocationMarker() {
   const map = useMap();
-  const [userLocation, setUserLocation] = useState(null);
+  const [userLocation, setUserLocation] = useState<L.LatLng>();
 
   useEffect(() => {
     map.locate().on("locationfound", function (e) {
@@ -25,7 +29,7 @@ function LocationMarker() {
     });
   }, [map]);
   return userLocation === null ? null : (
-    <Marker position={userLocation} icon={customIcon}>
+    <Marker position={userLocation ?? [0,0]} icon={customIcon}>
       <Popup>You are here!</Popup>
     </Marker>
   );
@@ -34,12 +38,12 @@ function LocationMarker() {
 export default function Map() {
   return (
     <MapContainer
-      className="min-w-full min-h-screen -z-10"
+      className="min-w-full min-h-screen z-0"
       center={[15, 15]}
       zoom={15}
       scrollWheelZoom={false}
       style={{ position: "relative" }}
-      zoomControl={true} // Disable the default zoom control
+      zoomControl={false} // Disable the default zoom control
     >
       <TileLayer
         maxZoom={18}
@@ -47,32 +51,7 @@ export default function Map() {
         url="https://tile.openstreetmap.de/{z}/{x}/{y}.png"
       />
       <LocationMarker />
-      <div className="leaflet-bottom leaflet-right">
-        <div className="leaflet-control-zoom leaflet-bar leaflet-control">
-          <a
-            className="leaflet-control-zoom-in"
-            href="#"
-            title="Zoom in"
-            role="button"
-            onClick={() => {
-              mapRef.current.leafletElement.zoomIn();
-            }}
-          >
-            +
-          </a>
-          <a
-            className="leaflet-control-zoom-out"
-            href="#"
-            title="Zoom out"
-            role="button"
-            onClick={() => {
-              mapRef.current.leafletElement.zoomOut();
-            }}
-          >
-            -
-          </a>
-        </div>
-      </div>
+      <ZoomControl position="bottomright" />
     </MapContainer>
   );
 }

@@ -39,7 +39,7 @@ export const LeftPane: React.FC<LeftPaneProps> = ({ setIsLeftPaneActive, data, s
         >
           <AiOutlineSearch size={16} />
         </button>
-        <input className='w-full mx-2' ref={searchRef} />
+        <input className='w-full mx-2 outline-none'  ref={searchRef} />
         <button 
           onClick={() => {
             searchRef.current!.value = "";

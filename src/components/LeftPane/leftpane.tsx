@@ -9,7 +9,7 @@ interface LeftPaneProps {
   data: any
 }
 
-export const LeftPane : React.FC<LeftPaneProps> = ({setIsLeftPaneActive, data}) => {
+export const LeftPane: React.FC<LeftPaneProps> = ({ setIsLeftPaneActive, data }) => {
   const [isOpen, setIsOpen] = useState(true);
   const togglePane = () => {
     setIsOpen(!isOpen);
@@ -17,17 +17,20 @@ export const LeftPane : React.FC<LeftPaneProps> = ({setIsLeftPaneActive, data}) 
   };
   return (
     <div
-      className={`text-black fixed left-0 top-0 h-full w-80 bg-white transform transition-transform ease-in-out duration-300 ${isOpen ? 'translate-x-0' : '-translate-x-full' // Changed from -translate-x-64 to -translate-x-full
+      className={`text-black fixed left-0 top-0 h-full w-96 rounded-xl bg-white transform transition-transform ease-in-out duration-300 ${isOpen ? 'translate-x-0' : '-translate-x-full' // Changed from -translate-x-64 to -translate-x-full
         }`}
     >
       <button
-        className="p-2 text-white bg-blue-500 absolute top-4 left-2 rounded-full z-99" 
+        className="p-2 text-white bg-blue-500 absolute top-4 left-2 rounded-full z-99"
         onClick={togglePane}
       >
         <IoIosArrowBack />
       </button>
-      <div className='m-12'>
-        {data.map((item:any) => <Panecard name={item.title} address={item.address.label+item.address.district+item.address.postalcode} distance={item.distance/1000} />)}
+      {/* <div className='m-8'> */}
+      <div className='m-8' style={{ maxHeight: 'calc(100% - 60px)', overflowY: 'auto' }}>
+        <div className="hide-scrollbar">
+          {data.map((item: any) => <Panecard name={item.title} address={item.address.label} distance={item.distance / 1000} />)}
+        </div>
       </div>
     </div>
   );

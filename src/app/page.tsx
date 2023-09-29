@@ -7,6 +7,7 @@ import { MdOutlineRestaurant, MdOutlineDirectionsTransitFilled, MdOutlineLocalHo
 import { LeftPane } from '@/components/LeftPane/leftpane';
 import { TbHotelService } from 'react-icons/tb';
 import { HiOutlineCamera } from 'react-icons/hi';
+import { IoMdOptions } from 'react-icons/io';
 
 export default function Home() {
   const [isLeftPaneOpen, setIsLeftPaneOpen] = useState(false);
@@ -14,9 +15,25 @@ export default function Home() {
   const [apiLoading, setApiLoading] = useState(false);
 
   const searchRef = useRef<HTMLInputElement>(null)
+  const [isPopupVisible, setIsPopupVisible] = useState(false);
+  const [sliderValue, setSliderValue] = useState(20); // Initial slider value
+  const [selectedOption, setSelectedOption] = useState('Time');
+  const showPopup = () => {
+    setIsPopupVisible(true);
+  };
+  const handleOptionChange = (event) => {
+    setSelectedOption(event.target.value);
+  };
+
+  const hidePopup = () => {
+    setIsPopupVisible(false);
+  };
 
   const toggleLeftPane = () => {
     setIsLeftPaneOpen(!isLeftPaneOpen);
+  };
+  const handleSliderChange = (event) => {
+    setSliderValue(event.target.value);
   };
 
   const fetchData = async (service: string) => {
@@ -24,9 +41,9 @@ export default function Home() {
     try {
       const latlin = JSON.parse(localStorage.getItem('lat') ?? "[0,0]");
       const response = await axios.get(`http://localhost:5000/?loc=${latlin[0]},${latlin[1]}&rangeType=time&rangeValue=20&transport=car&service=${service}`);
-        const data = response.data;
-        setApiData(data);
-        console.log(data)
+      const data = response.data;
+      setApiData(data);
+      console.log(data)
     } catch (error) {
       console.error('An error occurred:', error);
     }
@@ -136,6 +153,45 @@ export default function Home() {
           }>
           <MdAtm  className="text-[#F65314] text-xl"/>
           ATM
+        </button>
+        <button className="querybtn" onMouseEnter={showPopup} onMouseLeave={hidePopup}>
+          <IoMdOptions className="text-[#F65314] text-xl" />
+          Filters
+          {isPopupVisible && (
+            <div className="popup">
+              <p> Places within {sliderValue} {selectedOption === "Time" ? "mins" : "km"}</p>
+              <input
+                type="range"
+                min="5"
+                max="120"
+                value={sliderValue}
+                onChange={handleSliderChange}
+              />
+              <div className="radios ">
+                <label className='mr-5'>
+                  <input
+                    type="radio"
+                    name="option"
+                    value="time"
+                    checked={selectedOption === "Time"}
+                    onChange={() => setSelectedOption("Time")}
+                  />
+                 Time
+                </label>
+                <label>
+                  <input
+                    type="radio"
+                    name="option"
+                    value="Distance"
+                    checked={selectedOption === "Distance"}
+                    onChange={() => setSelectedOption("Distance")}
+                  />
+                 Distance
+                </label>
+              </div>
+            </div>
+          )}
+
         </button>
       </div>
       {isLeftPaneOpen && <LeftPane fetchData={fetchData} searchRef={searchRef} data={apiData} setIsLeftPaneActive={setIsLeftPaneOpen} />}

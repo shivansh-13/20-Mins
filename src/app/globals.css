@@ -46,3 +46,28 @@ body {
 .btn-icon {
   margin-bottom: 5px; 
 }
+.relative {
+  position: relative;
+}
+
+.popup {
+  position: absolute;
+  padding: 8px;
+  border-radius: 8px;
+  left: -203px; /* Adjust this value to position the popup as needed */
+  top: 0px;
+  width: 200px; /* Adjust width as needed */
+  background-color: white;
+  border: 1px solid #ccc;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  z-index: 1; /* Ensure it's above other content */
+  /* Additional styling for the popup */
+  /* You can add padding, text, and other styles here */
+  font-size: small;
+  display: block;
+}
+.radios input[type="radio"] {
+  /* width: 20px; 
+  height: 20px; */
+  margin-right: 5px; /* Optional margin for spacing between radio buttons */
+}

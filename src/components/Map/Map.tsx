@@ -66,7 +66,7 @@ const Map : React.FC<MapProps> = ({data}) => {
       />
       <LocationMarker />
       {data.map((i:any) => 
-        <Marker position={[i.position.lat, i.position.lng]} icon={redIcon} >
+        <Marker key={i.title} position={[i.position.lat, i.position.lng]} icon={redIcon} >
             <Tooltip>{i.title}</Tooltip>
         </Marker>
       )}

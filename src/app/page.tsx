@@ -10,7 +10,7 @@ import { HiOutlineCamera } from 'react-icons/hi';
 
 export default function Home() {
   const [isLeftPaneOpen, setIsLeftPaneOpen] = useState(false);
-  const [apiData, setApiData] = useState(null);
+  const [apiData, setApiData] = useState([]);
 
   const toggleLeftPane = () => {
     setIsLeftPaneOpen(!isLeftPaneOpen);
@@ -19,10 +19,11 @@ export default function Home() {
   const fetchData = async (service : string) => {
     
     try {
-      const latlin =JSON.parse(localStorage.getItem('lat') ?? "[0,0]");
-      const response = await axios.get(`http://localhost:5000/?loc=${latlin[0]},${latlin[1]}&time=10&transport=car&service=${service}`);
+      const latlin = JSON.parse(localStorage.getItem('lat') ?? "[0,0]");
+      const response = await axios.get(`http://localhost:5000/?loc=${latlin[0]},${latlin[1]}&rangeType=time&rangeValue=20&transport=car&service=${service}`);
         const data = response.data;
         setApiData(data);
+        console.log(data)
     } catch (error) {
       console.error('An error occurred:', error);
     }
@@ -30,7 +31,7 @@ export default function Home() {
   
   return (
     <main className="relative min-h-screen flex flex-col items-center justify-between">
-      <Map />
+      <Map data={apiData} />
       <button
         className="bg-blue-500 text-white p-2 rounded-full absolute top-4 left-2"
         onClick={toggleLeftPane}

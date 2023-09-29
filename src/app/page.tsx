@@ -20,7 +20,7 @@ export default function Home() {
 
     try {
       const latlin = JSON.parse(localStorage.getItem('lat') ?? "[0,0]");
-      const response = await axios.get(`http://localhost:5000/?loc=${latlin[0]},${latlin[1]}&time=10&transport=car&service=${service}`);
+      const response = await axios.get(`http://localhost:5000/?loc=${latlin[0]},${latlin[1]}&time=20&transport=car&service=${service}`);
       const data = response.data;
       setApiData(data);
     } catch (error) {
@@ -48,11 +48,11 @@ export default function Home() {
           <TbHotelService />
           Hotels
         </button>
-        <button className="querybtn" onClick={async () => { await fetchData('thingstodo'); toggleLeftPane() }}>
+        <button className="querybtn" onClick={async () => { await fetchData('entertainment'); toggleLeftPane() }}>
           <HiOutlineCamera />
           Things to do
         </button>
-        <button className="querybtn" onClick={async () => { await fetchData('transit'); toggleLeftPane() }}>
+        <button className="querybtn" onClick={async () => { await fetchData('localtransit'); toggleLeftPane() }}>
           <MdOutlineDirectionsTransitFilled />
           Transit
         </button>

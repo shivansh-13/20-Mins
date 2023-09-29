@@ -1,16 +1,5 @@
 "use client"
 import React, { useState } from 'react';
-import { RiMenu4Line } from 'react-icons/ri';
-import { MdOutlineRestaurant } from 'react-icons/md';
-import { MdOutlineDirectionsTransitFilled } from 'react-icons/md';
-import { MdOutlineLocalHospital } from 'react-icons/md';
-import { MdAtm } from 'react-icons/md';
-import { TbHotelService } from 'react-icons/tb';
-import { HiOutlineCamera } from 'react-icons/hi';
-
-
-
-import {LeftPane} from '../components/LeftPane/leftpane';
 import Map from '@/components/Map';
 
 
@@ -24,7 +13,7 @@ export default function Home() {
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-12">
       <Map />
-      <button
+      {/* <button
         className="bg-blue-500 text-white p-2 rounded-full absolute top-4 left-2"
         onClick={toggleLeftPane}
       >
@@ -57,7 +46,7 @@ export default function Home() {
         </button>
 
       </div>
-      {isLeftPaneOpen && <LeftPane setIsLeftPaneActive={setIsLeftPaneOpen} />}
+      {isLeftPaneOpen && <LeftPane setIsLeftPaneActive={setIsLeftPaneOpen} />} */}
     </main>
   );
 }

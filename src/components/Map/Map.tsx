@@ -10,24 +10,22 @@ import iconRetina from 'leaflet/dist/images/marker-icon-2x.png'
 import iconShadow from 'leaflet/dist/images/marker-shadow.png'
 import L from "leaflet"
 
-const icon = L.icon({ 
-    iconRetinaUrl:iconRetina.src, 
-    iconUrl: iconMarker.src, 
-    shadowUrl: iconShadow.src 
+import 'leaflet/dist/leaflet.css';
+
+const icon = L.icon({
+    iconRetinaUrl: iconRetina.src,
+    iconUrl: iconMarker.src,
+    shadowUrl: iconShadow.src
 });
 
 export default function Map() {
     return (
-        <MapContainer className="min-w-full min-h-screen z-0" center={[51.505, -0.09]} zoom={13} scrollWheelZoom={false}>
+        <MapContainer className="min-w-full min-h-screen" center={[45, -0.09]} zoom={10} scrollWheelZoom={false}>
             <TileLayer
-                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                maxZoom={18}
+                attribution='&copy; <a href="https://www.openstreetmap.org/copyrigh">OpenStreetMap</a> contributors'
+                url="https://tile.openstreetmap.de/{z}/{x}/{y}.png"
             />
-            <Marker position={[51.505, -0.09]} icon={icon} >
-            <Popup>
-                A pretty CSS3 popup. <br /> Easily customizable.
-            </Popup>
-            </Marker>
         </MapContainer>
     )
 }

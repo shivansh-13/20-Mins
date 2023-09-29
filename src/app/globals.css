@@ -35,11 +35,11 @@ body {
   text-align: center;
   text-decoration: none;
   display: flex;
-  flex-direction: column; /* Stack icon and text vertically */
-  align-items: center; /* Center items horizontally */
+  flex-direction: column;
+  align-items: center; 
   font-size: 16px;
 }
 
 .btn-icon {
-  margin-bottom: 5px; /* Adjust the spacing between icon and text */
+  margin-bottom: 5px; 
 }

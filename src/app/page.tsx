@@ -19,9 +19,9 @@ export default function Home() {
   };
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
+    <main className="flex min-h-screen flex-col items-center justify-between p-12">
       <button
-        className="bg-blue-500 text-white p-2 rounded-full absolute top-2 left-2"
+        className="bg-blue-500 text-white p-2 rounded-full absolute top-4 left-2"
         onClick={toggleLeftPane}
       >
         <RiMenu4Line />

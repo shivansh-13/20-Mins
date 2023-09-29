@@ -17,7 +17,7 @@ export const LeftPane: React.FC<LeftPaneProps> = ({ setIsLeftPaneActive, data })
   };
   return (
     <div
-      className={`text-black fixed left-0 top-0 h-full w-96 rounded-xl bg-white transform transition-transform ease-in-out duration-300 ${isOpen ? 'translate-x-0' : '-translate-x-full' // Changed from -translate-x-64 to -translate-x-full
+      className={`text-black fixed mx-2 my-4 left-0 top-0 h-full w-96 rounded-xl bg-white transform transition-transform ease-in-out duration-300 ${isOpen ? 'translate-x-0' : '-translate-x-full' // Changed from -translate-x-64 to -translate-x-full
         }`}
     >
       <button
@@ -28,8 +28,8 @@ export const LeftPane: React.FC<LeftPaneProps> = ({ setIsLeftPaneActive, data })
         Googlemaps
       </button>
 
-      <div className='m-16'/>
-      <div className='m-8' style={{ maxHeight: 'calc(100% - 60px)', overflowY: 'auto' }}>
+      {/* <div className='m-16'/> */}
+      <div className='m-8 mt-16' style={{ maxHeight: 'calc(100% - 60px)', overflowY: 'auto' }}>
         <div className="hide-scrollbar">
           {data.map((item: any) => <Panecard name={item.title} address={item.address.label} distance={item.distance / 1000} />)}
         </div>

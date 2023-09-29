@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { MapContainer, TileLayer, Marker, Popup, useMap, ZoomControl } from "react-leaflet";
+import { MapContainer, TileLayer, Marker, Popup, useMap, ZoomControl, Tooltip } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 
@@ -11,7 +11,7 @@ const customIcon = new L.Icon({
   iconUrl: iconMarker.src,
   iconRetinaUrl: iconMarkerTx.src,
   shadowUrl: iconMarkerShadow.src,
-  iconSize: [25, 41],
+  iconSize: [30, 46],
   iconAnchor: [12, 41],
   popupAnchor: [1, -34],
   tooltipAnchor: [16, -28],
@@ -39,7 +39,7 @@ function LocationMarker() {
   }, [map]);
   return userLocation === null ? null : (
     <Marker position={userLocation ?? [0,0]} icon={customIcon}>
-      <Popup>You are here!</Popup>
+      <Tooltip>You are here!</Tooltip>
     </Marker>
   );
 }
@@ -67,7 +67,7 @@ const Map : React.FC<MapProps> = ({data}) => {
       <LocationMarker />
       {data.map((i:any) => 
         <Marker position={[i.position.lat, i.position.lng]} icon={redIcon} >
-            <Popup>{i.title}</Popup>
+            <Tooltip>{i.title}</Tooltip>
         </Marker>
       )}
       <ZoomControl position="bottomright" />

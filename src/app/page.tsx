@@ -33,7 +33,7 @@ export default function Home() {
     <main className="relative min-h-screen flex flex-col items-center justify-between">
       <Map data={apiData} />
       <button
-        className="bg-blue-500 text-lg text-white p-3 rounded-full absolute top-4 left-2 flex items-center"
+        className="bg-blue-500 text-lg text-white p-3 rounded-full absolute top-4 left-2 flex items-center mx-2 my-4 "
         onClick={toggleLeftPane}
       >
         <RiMenu4Line className="mr-2 text-2xl" />
@@ -41,28 +41,28 @@ export default function Home() {
       </button>
 
       <div className="absolute top-4 right-2 flex flex-col">
-        <button className="querybtn" onClick={async () => { await fetchData('food'); toggleLeftPane() }}>
-          <MdOutlineRestaurant />
+        <button className="querybtn " onClick={async () => { await fetchData('food'); toggleLeftPane() }}>
+          <MdOutlineRestaurant  className="text-[#00A1F1] text-xl"/>
           Restaurants
         </button>
         <button className="querybtn" onClick={async () => { await fetchData('hotel'); toggleLeftPane() }}>
-          <TbHotelService />
+          <TbHotelService  className="text-[#F65314] text-xl"/>
           Hotels
         </button>
         <button className="querybtn" onClick={async () => { await fetchData('entertainment'); toggleLeftPane() }}>
-          <HiOutlineCamera />
+          <HiOutlineCamera  className="text-[#FFBB00] text-xl"/>
           Things to do
         </button>
         <button className="querybtn" onClick={async () => { await fetchData('localtransit'); toggleLeftPane() }}>
-          <MdOutlineDirectionsTransitFilled />
+          <MdOutlineDirectionsTransitFilled  className="text-[#00A1F1] text-xl"/>
           Transit
         </button>
         <button className="querybtn" onClick={async () => { await fetchData('pharmacy'); toggleLeftPane() }}>
-          <MdOutlineLocalHospital />
+          <MdOutlineLocalHospital  className="text-[#7CBB00] text-xl"/>
           Pharmacies
         </button>
         <button className="querybtn" onClick={async () => { await fetchData('atm'); toggleLeftPane() }}>
-          <MdAtm />
+          <MdAtm  className="text-[#F65314] text-xl"/>
           ATM
         </button>
 

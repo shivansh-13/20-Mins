@@ -39,27 +39,27 @@ export default function Home() {
         <RiMenu4Line />
       </button>
       <div className="absolute top-4 right-2 flex flex-col">
-        <button className="querybtn" onClick={() => fetchData('food')}>
+        <button className="querybtn" onClick={async() => { await fetchData('food'); toggleLeftPane()}}>
           <MdOutlineRestaurant />
           Restaurants
         </button>
-        <button className="querybtn" onClick={() => fetchData('hotel')}>
+        <button className="querybtn" onClick={async() => { await fetchData('hotel'); toggleLeftPane()}}>
           <TbHotelService />
           Hotels
         </button>
-        <button className="querybtn" onClick={() => fetchData('thingstodo')}>
+        <button className="querybtn" onClick={async() => { await fetchData('thingstodo'); toggleLeftPane()}}>
           <HiOutlineCamera />
           Things to do
         </button>
-        <button className="querybtn" onClick={() => fetchData('transit')}>
+        <button className="querybtn" onClick={async() => { await fetchData('transit'); toggleLeftPane()}}>
           <MdOutlineDirectionsTransitFilled />
           Transit
         </button>
-        <button className="querybtn" onClick={() => fetchData('pharmacy')}>
+        <button className="querybtn" onClick={async() => { await fetchData('pharmacy'); toggleLeftPane()}}>
           <MdOutlineLocalHospital />
           Pharmacies
         </button>
-        <button className="querybtn" onClick={() => fetchData('atm')}>
+        <button className="querybtn" onClick={async() => { await fetchData('atm'); toggleLeftPane()}}>
           <MdAtm />
           ATM
         </button>

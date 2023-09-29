@@ -19,7 +19,7 @@ export const LeftPane : React.FC<LeftPaneProps> = ({setIsLeftPaneActive}) => {
         }`}
     >
       <button
-        className="p-2 text-white bg-blue-500 absolute top-4 left-2 rounded-full" 
+        className="p-2 text-white bg-blue-500 absolute top-4 left-2 rounded-full z-99" 
         onClick={togglePane}
       >
         <IoIosArrowBack />

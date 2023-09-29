@@ -31,7 +31,7 @@ export const LeftPane: React.FC<LeftPaneProps> = ({ setIsLeftPaneActive, data })
       {/* <div className='m-16'/> */}
       <div className='m-8 mt-16' style={{ maxHeight: 'calc(100% - 60px)', overflowY: 'auto' }}>
         <div className="hide-scrollbar">
-          {data.map((item: any) => <Panecard name={item.title} address={item.address.label} distance={item.distance / 1000} />)}
+          {data.map((item: any) => <Panecard name={item.title} address={item.address.label} distance={item.distance / 1000} travelTime={item.travelTime}/>)}
         </div>
       </div>
     </div>

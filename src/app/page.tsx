@@ -1,5 +1,5 @@
 "use client"
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import Map from '@/components/Map';
 import { RiMenu4Line } from 'react-icons/ri';
@@ -11,13 +11,16 @@ import { HiOutlineCamera } from 'react-icons/hi';
 export default function Home() {
   const [isLeftPaneOpen, setIsLeftPaneOpen] = useState(false);
   const [apiData, setApiData] = useState([]);
+  const [apiLoading, setApiLoading] = useState(false);
+
+  const searchRef = useRef<HTMLInputElement>(null)
 
   const toggleLeftPane = () => {
     setIsLeftPaneOpen(!isLeftPaneOpen);
   };
 
   const fetchData = async (service: string) => {
-
+    setApiLoading(true);
     try {
       const latlin = JSON.parse(localStorage.getItem('lat') ?? "[0,0]");
       const response = await axios.get(`http://localhost:5000/?loc=${latlin[0]},${latlin[1]}&rangeType=time&rangeValue=20&transport=car&service=${service}`);
@@ -26,6 +29,9 @@ export default function Home() {
         console.log(data)
     } catch (error) {
       console.error('An error occurred:', error);
+    }
+    finally {
+      setApiLoading(false);
     }
   };
 
@@ -41,33 +47,98 @@ export default function Home() {
       </button>
 
       <div className="absolute top-4 right-2 flex flex-col">
-        <button className="querybtn " onClick={async () => { await fetchData('food'); toggleLeftPane() }}>
+        <button className="querybtn " onClick={async () => { 
+            fetchData("food"); 
+            if(!isLeftPaneOpen) toggleLeftPane(); 
+            let interval = setInterval(() => 
+            {
+              if(searchRef.current != null)
+              {
+                setTimeout(() => searchRef.current!.value = "food", 0.5 * 1000);
+                clearInterval(interval);
+              }
+            }, 0.1 * 1000) }
+          }>
           <MdOutlineRestaurant  className="text-[#00A1F1] text-xl"/>
           Restaurants
         </button>
-        <button className="querybtn" onClick={async () => { await fetchData('hotel'); toggleLeftPane() }}>
+        <button className="querybtn" onClick={async () => { 
+            fetchData("hotel"); 
+            if(!isLeftPaneOpen) toggleLeftPane(); 
+            let interval = setInterval(() => 
+            {
+              if(searchRef.current != null)
+              {
+                setTimeout(() => searchRef.current!.value = "hotel", 0.5 * 1000);
+                clearInterval(interval);
+              }
+            }, 0.1 * 1000) }
+          }>
           <TbHotelService  className="text-[#F65314] text-xl"/>
           Hotels
         </button>
-        <button className="querybtn" onClick={async () => { await fetchData('entertainment'); toggleLeftPane() }}>
+        <button className="querybtn" onClick={async () => { 
+            fetchData("entertainment"); 
+            if(!isLeftPaneOpen) toggleLeftPane(); 
+            let interval = setInterval(() => 
+            {
+              if(searchRef.current != null)
+              {
+                setTimeout(() => searchRef.current!.value = "entertainment", 0.5 * 1000);
+                clearInterval(interval);
+              }
+            }, 0.1 * 1000) }
+          }>
           <HiOutlineCamera  className="text-[#FFBB00] text-xl"/>
           Things to do
         </button>
-        <button className="querybtn" onClick={async () => { await fetchData('localtransit'); toggleLeftPane() }}>
+        <button className="querybtn" onClick={async () => { 
+            fetchData("localtransit"); 
+            if(!isLeftPaneOpen) toggleLeftPane(); 
+            let interval = setInterval(() => 
+            {
+              if(searchRef.current != null)
+              {
+                setTimeout(() => searchRef.current!.value = "localtransit", 0.5 * 1000);
+                clearInterval(interval);
+              }
+            }, 0.1 * 1000) }
+          }>
           <MdOutlineDirectionsTransitFilled  className="text-[#00A1F1] text-xl"/>
           Transit
         </button>
-        <button className="querybtn" onClick={async () => { await fetchData('pharmacy'); toggleLeftPane() }}>
+        <button className="querybtn" onClick={async () => { 
+            fetchData("pharmacy"); 
+            if(!isLeftPaneOpen) toggleLeftPane(); 
+            let interval = setInterval(() => 
+            {
+              if(searchRef.current != null)
+              {
+                setTimeout(() => searchRef.current!.value = "pharmacy", 0.5 * 1000);
+                clearInterval(interval);
+              }
+            }, 0.1 * 1000) }
+          }>
           <MdOutlineLocalHospital  className="text-[#7CBB00] text-xl"/>
           Pharmacies
         </button>
-        <button className="querybtn" onClick={async () => { await fetchData('atm'); toggleLeftPane() }}>
+        <button className="querybtn" onClick={async () => { 
+            fetchData("atm"); 
+            if(!isLeftPaneOpen) toggleLeftPane(); 
+            let interval = setInterval(() => 
+            {
+              if(searchRef.current != null)
+              {
+                setTimeout(() => searchRef.current!.value = "atm", 0.5 * 1000);
+                clearInterval(interval);
+              }
+            }, 0.1 * 1000) }
+          }>
           <MdAtm  className="text-[#F65314] text-xl"/>
           ATM
         </button>
-
       </div>
-      {isLeftPaneOpen && <LeftPane data={apiData} setIsLeftPaneActive={setIsLeftPaneOpen} />}
+      {isLeftPaneOpen && <LeftPane fetchData={fetchData} searchRef={searchRef} data={apiData} setIsLeftPaneActive={setIsLeftPaneOpen} />}
     </main>
   );
 }

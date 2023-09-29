@@ -20,9 +20,10 @@ export default function Home() {
 
     try {
       const latlin = JSON.parse(localStorage.getItem('lat') ?? "[0,0]");
-      const response = await axios.get(`http://localhost:5000/?loc=${latlin[0]},${latlin[1]}&time=20&transport=car&service=${service}`);
-      const data = response.data;
-      setApiData(data);
+      const response = await axios.get(`http://localhost:5000/?loc=${latlin[0]},${latlin[1]}&rangeType=time&rangeValue=20&transport=car&service=${service}`);
+        const data = response.data;
+        setApiData(data);
+        console.log(data)
     } catch (error) {
       console.error('An error occurred:', error);
     }
@@ -30,7 +31,7 @@ export default function Home() {
 
   return (
     <main className="relative min-h-screen flex flex-col items-center justify-between">
-      <Map />
+      <Map data={apiData} />
       <button
         className="bg-blue-500 text-lg text-white p-3 rounded-full absolute top-4 left-2 flex items-center"
         onClick={toggleLeftPane}

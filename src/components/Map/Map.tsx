@@ -17,6 +17,15 @@ const customIcon = new L.Icon({
   tooltipAnchor: [16, -28],
 });
 
+var redIcon = new L.Icon({
+    iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
+    shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34],
+    shadowSize: [41, 41]
+  });
+
 function LocationMarker() {
   const map = useMap();
   const [userLocation, setUserLocation] = useState<L.LatLng>();
@@ -35,7 +44,12 @@ function LocationMarker() {
   );
 }
 
-export default function Map() {
+
+interface MapProps {
+    data: any
+}
+
+const Map : React.FC<MapProps> = ({data}) => {
   return (
     <MapContainer
       className="min-w-full min-h-screen z-0"
@@ -51,7 +65,14 @@ export default function Map() {
         url="https://tile.openstreetmap.de/{z}/{x}/{y}.png"
       />
       <LocationMarker />
+      {data.map((i:any) => 
+        <Marker position={[i.position.lat, i.position.lng]} icon={redIcon} >
+            <Popup>{i.title}</Popup>
+        </Marker>
+      )}
       <ZoomControl position="bottomright" />
     </MapContainer>
   );
 }
+
+export default Map;

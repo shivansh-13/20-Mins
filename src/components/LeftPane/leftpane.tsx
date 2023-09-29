@@ -21,12 +21,14 @@ export const LeftPane: React.FC<LeftPaneProps> = ({ setIsLeftPaneActive, data })
         }`}
     >
       <button
-        className="p-2 text-white bg-blue-500 absolute top-4 left-2 rounded-full z-99"
+        className="p-3 text-lg flex items-center text-white bg-blue-500 absolute top-4 left-2 rounded-full z-99"
         onClick={togglePane}
       >
-        <IoIosArrowBack />
+        <IoIosArrowBack  className="mr-2 text-2xl" />
+        Googlemaps
       </button>
-      {/* <div className='m-8'> */}
+
+      <div className='m-16'/>
       <div className='m-8' style={{ maxHeight: 'calc(100% - 60px)', overflowY: 'auto' }}>
         <div className="hide-scrollbar">
           {data.map((item: any) => <Panecard name={item.title} address={item.address.label} distance={item.distance / 1000} />)}

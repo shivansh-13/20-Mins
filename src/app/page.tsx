@@ -15,50 +15,52 @@ export default function Home() {
   const toggleLeftPane = () => {
     setIsLeftPaneOpen(!isLeftPaneOpen);
   };
-  
-  const fetchData = async (service : string) => {
-    
+
+  const fetchData = async (service: string) => {
+
     try {
-      const latlin =JSON.parse(localStorage.getItem('lat') ?? "[0,0]");
+      const latlin = JSON.parse(localStorage.getItem('lat') ?? "[0,0]");
       const response = await axios.get(`http://localhost:5000/?loc=${latlin[0]},${latlin[1]}&time=10&transport=car&service=${service}`);
-        const data = response.data;
-        setApiData(data);
+      const data = response.data;
+      setApiData(data);
     } catch (error) {
       console.error('An error occurred:', error);
     }
   };
-  
+
   return (
     <main className="relative min-h-screen flex flex-col items-center justify-between">
       <Map />
       <button
-        className="bg-blue-500 text-white p-2 rounded-full absolute top-4 left-2"
+        className="bg-blue-500 text-lg text-white p-3 rounded-full absolute top-4 left-2 flex items-center"
         onClick={toggleLeftPane}
       >
-        <RiMenu4Line />
+        <RiMenu4Line className="mr-2 text-2xl" />
+        Googlemaps
       </button>
+
       <div className="absolute top-4 right-2 flex flex-col">
-        <button className="querybtn" onClick={async() => { await fetchData('food'); toggleLeftPane()}}>
+        <button className="querybtn" onClick={async () => { await fetchData('food'); toggleLeftPane() }}>
           <MdOutlineRestaurant />
           Restaurants
         </button>
-        <button className="querybtn" onClick={async() => { await fetchData('hotel'); toggleLeftPane()}}>
+        <button className="querybtn" onClick={async () => { await fetchData('hotel'); toggleLeftPane() }}>
           <TbHotelService />
           Hotels
         </button>
-        <button className="querybtn" onClick={async() => { await fetchData('thingstodo'); toggleLeftPane()}}>
+        <button className="querybtn" onClick={async () => { await fetchData('thingstodo'); toggleLeftPane() }}>
           <HiOutlineCamera />
           Things to do
         </button>
-        <button className="querybtn" onClick={async() => { await fetchData('transit'); toggleLeftPane()}}>
+        <button className="querybtn" onClick={async () => { await fetchData('transit'); toggleLeftPane() }}>
           <MdOutlineDirectionsTransitFilled />
           Transit
         </button>
-        <button className="querybtn" onClick={async() => { await fetchData('pharmacy'); toggleLeftPane()}}>
+        <button className="querybtn" onClick={async () => { await fetchData('pharmacy'); toggleLeftPane() }}>
           <MdOutlineLocalHospital />
           Pharmacies
         </button>
-        <button className="querybtn" onClick={async() => { await fetchData('atm'); toggleLeftPane()}}>
+        <button className="querybtn" onClick={async () => { await fetchData('atm'); toggleLeftPane() }}>
           <MdAtm />
           ATM
         </button>

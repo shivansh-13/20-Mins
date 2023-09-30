@@ -18,6 +18,10 @@ export default function Home() {
   const [isPopupVisible, setIsPopupVisible] = useState(false);
   const [sliderValue, setSliderValue] = useState(20); // Initial slider value
   const [selectedOption, setSelectedOption] = useState('Time');
+  const [isDarkMode, setIsDarkMode] = useState(false);
+  const changeMode = () => {
+    setIsDarkMode(!isDarkMode);
+  }
   const showPopup = () => {
     setIsPopupVisible(true);
   };
@@ -54,7 +58,7 @@ export default function Home() {
 
   return (
     <main className="relative min-h-screen flex flex-col items-center justify-between">
-      <Map data={apiData} />
+      <Map data={apiData} mode={isDarkMode} />
       <button
         className="bg-blue-500 text-lg text-white p-3 rounded-full absolute top-4 left-2 flex items-center mx-2 my-4 "
         onClick={toggleLeftPane}
@@ -194,7 +198,20 @@ export default function Home() {
 
         </button>
       </div>
-      {isLeftPaneOpen && <LeftPane fetchData={fetchData} searchRef={searchRef} data={apiData} setIsLeftPaneActive={setIsLeftPaneOpen} />}
+      <div className="dark-mode-toggle  absolute top-[92vh] left-[1vw]">
+      <label className="switch">
+        <input
+          type="checkbox"
+          checked={isDarkMode}
+          onChange={changeMode}
+        />
+        <span className="slider"></span>
+      </label>
+      <span className={`mode-label ${isDarkMode ? 'dark' : 'light'}`}>
+        {isDarkMode ? 'Dark' : 'Light'} Mode
+      </span>
+    </div>
+      {isLeftPaneOpen && <LeftPane fetchData={fetchData} searchRef={searchRef} data={apiData} setIsLeftPaneActive={setIsLeftPaneOpen} isApiLoading={apiLoading} />}
     </main>
   );
 }

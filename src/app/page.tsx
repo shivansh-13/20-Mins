@@ -17,7 +17,8 @@ export default function Home() {
   const [isPopupVisible, setIsPopupVisible] = useState(false);
   const [sliderValue, setSliderValue] = useState(20); // Initial slider value
   const [selectedOption, setSelectedOption] = useState('time');
-
+  const [isApiLoading, setIsApiLoading] = useState(false);
+  
   const [isDarkMode, setIsDarkMode] = useState(false);
   const changeMode = () => {
     setIsDarkMode(!isDarkMode);
@@ -38,6 +39,7 @@ export default function Home() {
   };
 
   const fetchData = async (service: string) => {
+    setIsApiLoading(true);
     try {
       const latlin = JSON.parse(localStorage.getItem('lat') ?? "[0,0]");
       const response = await axios.get(`http://localhost:5000/?loc=${latlin[0]},${latlin[1]}&rangeType=${selectedOption}&rangeValue=${sliderValue}&transport=car&service=${service}`);
@@ -46,6 +48,8 @@ export default function Home() {
       console.log(data)
     } catch (error) {
       console.error('An error occurred:', error);
+    }finally{
+      setIsApiLoading(false);
     }
   };
 
@@ -204,7 +208,7 @@ export default function Home() {
         {isDarkMode ? 'Dark' : 'Light'} Mode
       </span>
     </div>
-      {isLeftPaneOpen && <LeftPane fetchData={fetchData} searchRef={searchRef} data={apiData} setIsLeftPaneActive={setIsLeftPaneOpen} isApiLoading={apiLoading} />}
+      {isLeftPaneOpen && <LeftPane fetchData={fetchData} searchRef={searchRef} data={apiData} setIsLeftPaneActive={setIsLeftPaneOpen} isApiLoading={isApiLoading} />}
     </main>
   );
 }

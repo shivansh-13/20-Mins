@@ -76,7 +76,7 @@ const Map: React.FC<MapProps> = ({ data, mode }) => {
     // Mode 0 settings
     tileLayerProps = {
       maxZoom: 20, // Change maxZoom for mode 0
-      attribution: '<a href="http://jawg.io" title="Tiles Courtesy of Jawg Maps" target="_blank">&copy',
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
       url: 'https://{s}.tile.jawg.io/jawg-terrain/{z}/{x}/{y}{r}.png?access-token=N4Wg0TMjUlhaEMEHKmlIneoOmd8dX5tbbveaZNUsHk0v838BXttsa4dyHhU8Ms1s',
     };
   } else {

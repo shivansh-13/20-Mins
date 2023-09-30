@@ -1,11 +1,14 @@
+import {AiOutlineLike} from "react-icons/ai"
+
 interface PanecardProps {
     name: string
     address: string
     distance: number
-    travelTime: number
+    travelTime: number,
+    likes: string
 }
 
-export const Panecard: React.FC<PanecardProps> = ({ name, address, distance, travelTime }) => {
+export const Panecard: React.FC<PanecardProps> = ({ name, address, distance, travelTime, likes }) => {
     function formatTime(seconds:number) {
         if (seconds < 60) {
             return `${seconds} sec`;
@@ -29,6 +32,10 @@ export const Panecard: React.FC<PanecardProps> = ({ name, address, distance, tra
                 </div>
                 <div className="text-xs text-gray-500 h-max-8 overflow-scroll">
                     {address}
+                </div>
+                <div>
+                    <AiOutlineLike />
+                    {likes}
                 </div>
             </div>
             <div className="flex flex-col align-top">

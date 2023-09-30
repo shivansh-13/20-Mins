@@ -160,7 +160,7 @@ export default function Home() {
           Filters
           {isPopupVisible && (
             <div className="popup">
-              <p> Places within {sliderValue} {selectedOption === "Time" ? "mins" : "km"}</p>
+              <p> Places within {sliderValue} {selectedOption === "time" ? "mins" : "km"}</p>
               <input
                 type="range"
                 min="5"

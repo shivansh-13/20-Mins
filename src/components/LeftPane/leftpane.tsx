@@ -84,6 +84,7 @@ export const LeftPane: React.FC<LeftPaneProps> = ({
                 address={item.address.label}
                 distance={item.distance / 1000}
                 travelTime={item.travelTime}
+                likes={item.likes ?? ""}
               />
             ))
           )}

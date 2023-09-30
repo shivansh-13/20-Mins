@@ -1,7 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { MapContainer, TileLayer, Marker, Popup, useMap, ZoomControl, Tooltip } from "react-leaflet";
+import { createControlComponent } from "@react-leaflet/core"
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
+import axios from "axios"
+import "leaflet-routing-machine"
 
 import iconMarker from "leaflet/dist/images/marker-icon.png"
 import iconMarkerTx from "leaflet/dist/images/marker-icon-2x.png"
@@ -18,13 +21,13 @@ const customIcon = new L.Icon({
 });
 
 var redIcon = new L.Icon({
-    iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
-    shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
-    iconSize: [25, 41],
-    iconAnchor: [12, 41],
-    popupAnchor: [1, -34],
-    shadowSize: [41, 41]
-  });
+  iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
+  shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  shadowSize: [41, 41]
+});
 
 function LocationMarker() {
   const map = useMap();
@@ -33,12 +36,12 @@ function LocationMarker() {
   useEffect(() => {
     map.locate().on("locationfound", function (e) {
       setUserLocation(e.latlng);
-      localStorage.setItem("lat",  JSON.stringify([e.latlng.lat ,e.latlng.lng]));
+      localStorage.setItem("lat", JSON.stringify([e.latlng.lat, e.latlng.lng]));
       map.flyTo(e.latlng, map.getZoom());
     });
   }, [map]);
   return userLocation === null ? null : (
-    <Marker position={userLocation ?? [0,0]} icon={customIcon}>
+    <Marker position={userLocation ?? [0, 0]} icon={customIcon}>
       <Tooltip>You are here!</Tooltip>
     </Marker>
   );
@@ -46,10 +49,27 @@ function LocationMarker() {
 
 
 interface MapProps {
-    data: any
+  data: any
 }
 
-const Map : React.FC<MapProps> = ({data}) => {
+const Map: React.FC<MapProps> = ({ data }) => {
+  const [route, setRoute] = useState([])
+  const mapRef = useRef<L.Map>(null)
+
+  const fetchRoute = async (dest: any) => {
+    const latlin = JSON.parse(localStorage.getItem('lat') ?? "[0,0]");
+    const res = await axios.get(`http://localhost:5000/findRoute?loc=${latlin[0]},${latlin[1]}&dest=${[dest[0], dest[1]]}&transport=car`);
+    setRoute(res.data.polyline);
+    console.log(res.data.polyline);
+    const waypoints = res.data.polyline.map((d:any) => L.latLng(d[0], d[1]));
+
+    mapRef.current?.addLayer(L.polyline(waypoints,{
+        color: '#6FA1EC',
+        weight: 6
+    }))
+  }
+
+
   return (
     <MapContainer
       className="min-w-full min-h-screen z-0"
@@ -58,6 +78,7 @@ const Map : React.FC<MapProps> = ({data}) => {
       scrollWheelZoom={false}
       style={{ position: "relative" }}
       zoomControl={false} // Disable the default zoom control
+      ref={mapRef}
     >
       <TileLayer
         maxZoom={18}
@@ -65,9 +86,13 @@ const Map : React.FC<MapProps> = ({data}) => {
         url="https://tile.openstreetmap.de/{z}/{x}/{y}.png"
       />
       <LocationMarker />
-      {data.map((i:any) => 
-        <Marker key={i.title} position={[i.position.lat, i.position.lng]} icon={redIcon} >
-            <Tooltip>{i.title}</Tooltip>
+      {data.map((i: any) =>
+        <Marker key={i.title} position={[i.position.lat, i.position.lng]} icon={redIcon} eventHandlers={{
+          click: () => {
+            fetchRoute([i.position.lat, i.position.lng]);
+          }
+        }} >
+          <Tooltip>{i.title}</Tooltip>
         </Marker>
       )}
       <ZoomControl position="bottomright" />

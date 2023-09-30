@@ -73,6 +73,7 @@ export const LeftPane: React.FC<LeftPaneProps> = ({
         <div className="hide-scrollbar">
           {data.map((item: any) => (
             <Panecard
+              key={item.title}
               name={item.title}
               address={item.address.label}
               distance={item.distance / 1000}

@@ -12,17 +12,14 @@ import { IoMdOptions } from 'react-icons/io';
 export default function Home() {
   const [isLeftPaneOpen, setIsLeftPaneOpen] = useState(false);
   const [apiData, setApiData] = useState([]);
-  const [apiLoading, setApiLoading] = useState(false);
 
   const searchRef = useRef<HTMLInputElement>(null)
   const [isPopupVisible, setIsPopupVisible] = useState(false);
   const [sliderValue, setSliderValue] = useState(20); // Initial slider value
-  const [selectedOption, setSelectedOption] = useState('Time');
+  const [selectedOption, setSelectedOption] = useState('time');
+
   const showPopup = () => {
     setIsPopupVisible(true);
-  };
-  const handleOptionChange = (event) => {
-    setSelectedOption(event.target.value);
   };
 
   const hidePopup = () => {
@@ -32,23 +29,19 @@ export default function Home() {
   const toggleLeftPane = () => {
     setIsLeftPaneOpen(!isLeftPaneOpen);
   };
-  const handleSliderChange = (event) => {
+  const handleSliderChange = (event: any) => {
     setSliderValue(event.target.value);
   };
 
   const fetchData = async (service: string) => {
-    setApiLoading(true);
     try {
       const latlin = JSON.parse(localStorage.getItem('lat') ?? "[0,0]");
-      const response = await axios.get(`http://localhost:5000/?loc=${latlin[0]},${latlin[1]}&rangeType=time&rangeValue=20&transport=car&service=${service}`);
+      const response = await axios.get(`http://localhost:5000/?loc=${latlin[0]},${latlin[1]}&rangeType=${selectedOption}&rangeValue=${sliderValue}&transport=car&service=${service}`);
       const data = response.data;
       setApiData(data);
       console.log(data)
     } catch (error) {
       console.error('An error occurred:', error);
-    }
-    finally {
-      setApiLoading(false);
     }
   };
 
@@ -173,8 +166,8 @@ export default function Home() {
                     type="radio"
                     name="option"
                     value="time"
-                    checked={selectedOption === "Time"}
-                    onChange={() => setSelectedOption("Time")}
+                    checked={selectedOption === "time"}
+                    onChange={() => setSelectedOption("time")}
                   />
                  Time
                 </label>
@@ -182,9 +175,9 @@ export default function Home() {
                   <input
                     type="radio"
                     name="option"
-                    value="Distance"
-                    checked={selectedOption === "Distance"}
-                    onChange={() => setSelectedOption("Distance")}
+                    value="distance"
+                    checked={selectedOption === "distance"}
+                    onChange={() => setSelectedOption("distance")}
                   />
                  Distance
                 </label>

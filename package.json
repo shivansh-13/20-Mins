@@ -10,6 +10,9 @@
   },
   "dependencies": {
     "@react-icons/all-files": "^4.1.0",
+    "@react-leaflet/core": "^2.1.0",
+    "axios": "^1.5.1",
+    "leaflet-routing-machine": "^3.2.12",
     "next": "latest",
     "react": "latest",
     "react-dom": "latest",

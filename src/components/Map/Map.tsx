@@ -54,12 +54,13 @@ interface MapProps {
 }
 
 const Map: React.FC<MapProps> = ({ data, mode }) => {
-  const [route, setRoute] = useState([])
-  const mapRef = useRef<L.Map>(null)
+  const [route, setRoute] = useState([]);
+  const mapRef = useRef<L.Map>(null);
+  const [startLoc, setStartLoc] = useState(JSON.parse(localStorage.getItem('lat') ?? "[0,0]"));
 
   const fetchRoute = async (dest: any) => {
     const latlin = JSON.parse(localStorage.getItem('lat') ?? "[0,0]");
-    const res = await axios.get(`http://localhost:5000/findRoute?loc=${latlin[0]},${latlin[1]}&dest=${[dest[0], dest[1]]}&transport=car`);
+    const res = await axios.get(`http://localhost:5000/findRoute?loc=${startLoc[0]},${startLoc[1]}&dest=${[dest[0], dest[1]]}&transport=car`);
     setRoute(res.data.polyline);
     console.log(res.data.polyline);
     const waypoints = res.data.polyline.map((d:any) => L.latLng(d[0], d[1]));
@@ -67,7 +68,9 @@ const Map: React.FC<MapProps> = ({ data, mode }) => {
     mapRef.current?.addLayer(L.polyline(waypoints,{
         color: '#6FA1EC',
         weight: 6
-    }))
+    }));
+
+    setStartLoc(res.data.polyline.at(-1));
   }
 
   let tileLayerProps;

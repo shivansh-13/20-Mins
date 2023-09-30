@@ -57,6 +57,7 @@ const Map: React.FC<MapProps> = ({ data, mode }) => {
   const [route, setRoute] = useState([]);
   const mapRef = useRef<L.Map>(null);
   const [startLoc, setStartLoc] = useState(JSON.parse(localStorage.getItem('lat') ?? "[0,0]"));
+  const [activeRouteLayer, setActiveRouteLayer] = useState<L.Layer>()
 
   const fetchRoute = async (dest: any) => {
     const latlin = JSON.parse(localStorage.getItem('lat') ?? "[0,0]");
@@ -65,12 +66,17 @@ const Map: React.FC<MapProps> = ({ data, mode }) => {
     console.log(res.data.polyline);
     const waypoints = res.data.polyline.map((d:any) => L.latLng(d[0], d[1]));
 
-    mapRef.current?.addLayer(L.polyline(waypoints,{
+    if(activeRouteLayer)
+      mapRef.current?.removeLayer(activeRouteLayer)
+
+    let layer = L.polyline(waypoints,{
         color: '#6FA1EC',
         weight: 6
-    }));
+    });
 
-    setStartLoc(res.data.polyline.at(-1));
+    setActiveRouteLayer(layer);
+
+    mapRef.current?.addLayer(layer);
   }
 
   let tileLayerProps;

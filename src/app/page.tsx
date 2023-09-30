@@ -42,7 +42,7 @@ export default function Home() {
     setIsApiLoading(true);
     try {
       const latlin = JSON.parse(localStorage.getItem('lat') ?? "[0,0]");
-      const response = await axios.get(`http://localhost:5000/?loc=${latlin[0]},${latlin[1]}&rangeType=${selectedOption}&rangeValue=${sliderValue}&transport=car&service=${service}`);
+      const response = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/?loc=${latlin[0]},${latlin[1]}&rangeType=${selectedOption}&rangeValue=${sliderValue}&transport=car&service=${service}`);
       const data = response.data;
       setApiData(data);
       console.log(data)

@@ -6,7 +6,7 @@ interface PanecardProps {
 }
 
 export const Panecard: React.FC<PanecardProps> = ({ name, address, distance, travelTime }) => {
-    function formatTime(seconds) {
+    function formatTime(seconds:number) {
         if (seconds < 60) {
             return `${seconds} sec`;
         } else if (seconds < 3600) {

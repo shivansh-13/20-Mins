@@ -61,7 +61,7 @@ const Map: React.FC<MapProps> = ({ data, mode }) => {
 
   const fetchRoute = async (dest: any) => {
     const latlin = JSON.parse(localStorage.getItem('lat') ?? "[0,0]");
-    const res = await axios.get(`http://localhost:5000/findRoute?loc=${startLoc[0]},${startLoc[1]}&dest=${[dest[0], dest[1]]}&transport=car`);
+    const res = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/findRoute?loc=${startLoc[0]},${startLoc[1]}&dest=${[dest[0], dest[1]]}&transport=car`);
     setRoute(res.data.polyline);
     console.log(res.data.polyline);
     const waypoints = res.data.polyline.map((d:any) => L.latLng(d[0], d[1]));

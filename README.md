@@ -1,3 +1,6 @@
+<img width="1440" alt="Screenshot 2023-10-01 at 12 22 52 PM" src="https://github.com/shivansh-13/20-Mins/assets/80212477/65baa8a0-f59b-4f2c-b79d-9bca43d0cc6b"><img width="1440" alt="Screenshot 2023-10-01 at 12 22 36 PM" src="https://github.com/shivansh-13/20-Mins/assets/80212477/5db3992a-ec5f-4418-be62-be11f282744f">
+
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started

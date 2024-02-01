@@ -49,7 +49,7 @@ export const LeftPane: React.FC<LeftPaneProps> = ({
           onClick={togglePane}
         >
           <IoIosArrowBack className="mr-2 text-2xl" />
-          Googlemaps
+          Googlemapss
         </button>
        
       <div className='border-b-2 border-solid border-grey mx-4  text-lg mt-20 flex items-center justify-between'>
